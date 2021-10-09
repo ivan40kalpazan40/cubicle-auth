@@ -7,7 +7,7 @@ const login = async (username, password) => {
   try {
     const user = await User.findByUsername(username);
     if (user) {
-      const isValid = await user.validatePassword(password);
+      const isValid = user.validatePassword(password);
       if (isValid) {
         return user;
       } else {
@@ -25,10 +25,10 @@ const register = async (username, password, repeatPassword) => {
   return user;
 };
 
-const createToken = (user) => {
+function createToken(user) {
   let payload = {
-    _id: user('_id'),
-    username: user('username'),
+    _id: user._id,
+    username: user.username,
   };
   // todo jwt ...
   return new Promise((resolve, reject) => {
@@ -40,8 +40,8 @@ const createToken = (user) => {
       }
     });
   });
-};
+}
 
-const authService = { register, login };
+const authService = { register, login, createToken };
 
 module.exports = authService;

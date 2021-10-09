@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const cookieParser = require('cookie-parser');
 const initHandlebars = require('./config/handlebars');
 const routes = require('./routes');
 const config = require('./config/config.json')[process.env.NODE_ENV];
@@ -9,6 +10,7 @@ const Cube = require('./models/Cube');
 const app = express();
 
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 initHandlebars(app);
 app.use(express.static(path.resolve(__dirname, './public')));
 app.use(routes);
