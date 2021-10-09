@@ -7,8 +7,6 @@ const login = async (username, password) => {
     if (user) {
       const isValid = await bcrypt.compare(password, user.password);
       if (isValid) {
-        // Log user
-        console.log('>>>log user');
         return user;
       } else {
         throw new Error('Wrong password');
@@ -17,7 +15,6 @@ const login = async (username, password) => {
       throw new Error('User does not exist.');
     }
   } catch (error) {
-    //console.log(error.message);
     throw error;
   }
 };

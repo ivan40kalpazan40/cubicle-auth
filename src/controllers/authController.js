@@ -15,11 +15,11 @@ const renderRegister = (req, res) => {
 const logUser = async (req, res) => {
   const { username, password } = req.body;
   try {
-    const result = await authService.login(username, password);
-    console.log('success');
-    console.log(result);
+    const user = await authService.login(username, password);
+    res.redirect('/');
   } catch (error) {
-    return console.log(`_>` + error.message);
+    console.log(`_>` + error.message);
+    return res.redirect('/auth/login');
   }
 };
 const registerUser = async (req, res) => {
