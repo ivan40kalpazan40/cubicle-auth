@@ -3,7 +3,6 @@ const cubeService = require('../services/cubeService');
 const router = express.Router();
 
 const createAccessoryPage = (req, res) => {
-  console.log('GET REQUEST FROM ACCESSORY');
   res.render('createAccessory');
 };
 
@@ -12,7 +11,6 @@ const createAccessory = (req, res) => {
   cubeService
     .newAccessory(name, description, imageUrl)
     .then((data) => {
-      console.log(data);
       res.redirect('/');
     })
     .catch((err) => {
@@ -43,7 +41,6 @@ const attachAccessory = async (req, res) => {
   const result = await cubeService.updateCube(req.params.id, {
     accessories: cube.accessories,
   });
-  console.log(result);
   res.redirect('/');
 };
 

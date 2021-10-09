@@ -10,6 +10,7 @@ const cubeSchema = new mongoose.Schema({
   },
   difficulty: { type: Number, min: 1, max: 10 },
   accessories: [{ type: mongoose.Types.ObjectId, ref: 'Accessory' }],
+  creatorId: { type: String, required: true },
 });
 
 const Cube = mongoose.model('Cube', cubeSchema);
