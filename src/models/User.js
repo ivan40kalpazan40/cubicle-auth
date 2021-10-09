@@ -12,6 +12,10 @@ userSchema.pre('save', function (next) {
     next();
   });
 });
+
+userSchema.static('findByUsername', function (username) {
+  return this.findOne({ username });
+});
 const User = mongoose.model('User', userSchema);
 
 module.exports = User;
