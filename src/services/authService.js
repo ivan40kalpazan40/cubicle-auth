@@ -1,7 +1,10 @@
 const User = require('../models/User');
+const bcrypt = require('bcrypt');
 
-const register = (username, password) => {
-  console.log(username, password);
+const register = async (username, password, repeatPassword) => {
+  const hash = await bcrypt.hash(password, 10);
+  const user = await User.create({ username, password: hash });
+  return user;
 };
 
 const authService = { register };

@@ -12,12 +12,10 @@ const renderRegister = (req, res) => {
   res.render('auth/register');
 };
 
-const registerUser = (req, res) => {
+const registerUser = async (req, res) => {
   const { username, password, repeatPassword } = req.body;
-  authService.register(username, password);
-  // check if user exists in db
-  //check if password is same as repeatPassword
-  //create user in db
+  const user = await authService.register(username, password);
+  res.redirect('/auth/login');
 };
 
 router.get('/login', renderLogin);
