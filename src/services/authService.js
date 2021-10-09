@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const { SECRET } = require('../constants');
 const User = require('../models/User');
 
 const login = async (username, password) => {
@@ -7,7 +8,6 @@ const login = async (username, password) => {
     const user = await User.findByUsername(username);
     if (user) {
       const isValid = await user.validatePassword(password);
-      console.log(isValid);
       if (isValid) {
         return user;
       } else {
@@ -25,17 +25,22 @@ const register = async (username, password, repeatPassword) => {
   return user;
 };
 
-function createToken(user) {
+const createToken = (user) => {
   let payload = {
-    _id: user.get('_id'),
-    username: user.get('username'),
+    _id: user('_id'),
+    username: user('username'),
   };
   // todo jwt ...
-  return new Promise(
-    (resolve, reject),
-    jwt.sign(payload, secret, { expiresIn: '1d' })
-  );
-}
+  return new Promise((resolve, reject) => {
+    jwt.sign(payload, SECRET, (err, resolvedToken) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(resolvedToken);
+      }
+    });
+  });
+};
 
 const authService = { register, login };
 
