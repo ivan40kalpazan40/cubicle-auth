@@ -1,0 +1,36 @@
+<main>
+  {{#if title}}
+    <h1>{{title}}</h1>
+  {{else}}
+    <h1>Browser</h1>
+  {{/if}}
+
+  <form action='/search' method='GET'>
+    <input type='text' class='search' name='search' placeholder='Search...' />
+    <input
+      type='number'
+      name='from'
+      class='difficulty'
+      placeholder='Difficulty from...'
+    />
+    <span>-</span>
+    <input
+      type='number'
+      name='to'
+      class='difficulty'
+      placeholder='Difficulty to...'
+    />
+    <input type='submit' value='search' />
+  </form>
+  <div class='cubes'>
+    {{#each items}}
+      <div class='cube'>
+        <img class='cube' src='{{this.imageUrl}}' />
+        <p class='name'>{{this.name}}</p>
+        <p><span>Difficulty level:</span> {{this.difficulty}}</p>
+        <a class='btn' href='/cube/{{this._id}}'>Details</a>
+      </div>
+    {{/each}}
+  </div>
+
+</main>
