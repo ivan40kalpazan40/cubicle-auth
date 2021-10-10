@@ -17,12 +17,12 @@ const logUser = async (req, res) => {
   try {
     const user = await authService.login(username, password);
     const token = await authService.createToken(user);
-    res.cookie(TOKEN_COOKIE_NAME, token);
+    res.cookie(TOKEN_COOKIE_NAME, token, { httpOnly: true });
     res.redirect('/');
   } catch (error) {
     console.log(`_>` + error.message);
     return res.redirect('/auth/login');
-  }
+  } 
 };
 const registerUser = async (req, res) => {
   const { username, password, repeatPassword } = req.body;
@@ -31,7 +31,7 @@ const registerUser = async (req, res) => {
     res.redirect('/auth/login');
   } catch (error) {
     console.log(error.message);
-    res.render('404');
+    res.redirect('/404');
   }
 };
 

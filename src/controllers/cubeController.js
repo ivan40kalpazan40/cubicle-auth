@@ -37,7 +37,18 @@ const createCube = (req, res) => {
     });
 };
 
+const renderEdit = (req, res) => {
+  res.render('editCubePage');
+};
+
+const renderDelete = (req, res) => {
+  res.render('deleteCubePage');
+};
+
 router.get('/create', getCreateCube);
 router.post('/create', createCube);
 router.get('/:cubeId', cubeDetails);
+router.get('/:cubeId/edit', renderEdit);
+router.get('/:cubeId/delete', renderDelete);
+
 module.exports = router;
