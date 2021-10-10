@@ -38,10 +38,16 @@ const createCube = (req, res) => {
 };
 
 const renderEdit = (req, res) => {
+  if (!req.user) {
+    return res.redirect('/auth/login');
+  }
   res.render('editCubePage');
 };
 
 const renderDelete = (req, res) => {
+  if (!req.user) {
+    return res.redirect('/auth/login');
+  }
   res.render('deleteCubePage');
 };
 
