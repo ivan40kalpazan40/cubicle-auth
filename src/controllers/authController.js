@@ -26,8 +26,13 @@ const logUser = async (req, res) => {
 };
 const registerUser = async (req, res) => {
   const { username, password, repeatPassword } = req.body;
-  const user = await authService.register(username, password);
-  res.redirect('/auth/login');
+  try {
+    const user = await authService.register(username, password);
+    res.redirect('/auth/login');
+  } catch (error) {
+    console.log(error.message);
+    res.render('404');
+  }
 };
 
 router.get('/login', renderLogin);
