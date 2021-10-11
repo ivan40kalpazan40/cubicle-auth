@@ -52,10 +52,21 @@ const renderDelete = async (req, res) => {
   });
 };
 
+const deleteCubePage = async (req, res) => {
+  try {
+    await cubeService.deleteCube(req.params.cubeId);
+    res.redirect(`/`);
+  } catch (error) {
+    console.log(error.message);
+    res.redirect('/404');
+  }
+};
+
 router.get('/create', isAuth, getCreateCube);
 router.post('/create', createCube);
 router.get('/:cubeId', cubeDetails);
 router.get('/:cubeId/edit', isAuth, renderEdit);
 router.get('/:cubeId/delete', isAuth, renderDelete);
+router.post('/:cubeId/delete', isAuth, deleteCubePage);
 
 module.exports = router;

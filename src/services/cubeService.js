@@ -13,6 +13,11 @@ const getOne = async (id) => {
 const create = (name, description, imageUrl, difficulty) => {
   return Cube.create({ name, description, imageUrl, difficulty });
 };
+
+const deleteCube = (id) => {
+  return Cube.findByIdAndDelete(id);
+};
+
 const newAccessory = (name, description, imageUrl) => {
   return Accessory.create({ name, description, imageUrl });
 };
@@ -42,6 +47,7 @@ const updateCube = async (id, update) => {
 };
 const cubeService = {
   create,
+  deleteCube,
   getAll,
   getOne,
   newAccessory,
