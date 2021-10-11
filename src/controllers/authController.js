@@ -35,8 +35,15 @@ const registerUser = async (req, res) => {
   }
 };
 
+const logoutUser = (req, res) => {
+  res.clearCookie(TOKEN_COOKIE_NAME);
+  res.redirect('/');
+  //authService.logUserOut();
+};
+
 router.get('/login', renderLogin);
 router.get('/register', renderRegister);
+router.get('/logout', logoutUser);
 router.post('/login', logUser);
 router.post('/register', registerUser);
 
