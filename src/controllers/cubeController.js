@@ -25,8 +25,9 @@ const getCreateCube = async (req, res) => {
 };
 const createCube = (req, res) => {
   const { name, description, imageUrl, difficulty } = req.body;
+  const creatorId = req.user._id;
   cubeService
-    .create(name, description, imageUrl, difficulty)
+    .create(name, description, imageUrl, difficulty, creatorId)
     .then((cube) => {
       res.redirect('/');
     })
@@ -55,7 +56,7 @@ const renderDelete = async (req, res) => {
   res.render('deleteCubePage', {
     cube,
     difficulty: difficulty[cube.difficulty],
-    auth: req.user
+    auth: req.user,
   });
 };
 

@@ -10,8 +10,8 @@ const getOne = async (id) => {
   return cube;
 };
 
-const create = (name, description, imageUrl, difficulty) => {
-  return Cube.create({ name, description, imageUrl, difficulty });
+const create = (name, description, imageUrl, difficulty, creatorId) => {
+  return Cube.create({ name, description, imageUrl, difficulty, creatorId });
 };
 
 const deleteCube = (id) => {
