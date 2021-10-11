@@ -2,6 +2,7 @@ const express = require('express');
 
 const authService = require('../services/authService');
 const { TOKEN_COOKIE_NAME } = require('../constants');
+const { isGuest } = require('../middleware/authMiddleware');
 const router = express.Router();
 
 const renderLogin = (req, res) => {
@@ -41,10 +42,10 @@ const logoutUser = (req, res) => {
   //authService.logUserOut();
 };
 
-router.get('/login', renderLogin);
-router.get('/register', renderRegister);
+router.get('/login', isGuest, renderLogin);
+router.get('/register', isGuest, renderRegister);
 router.get('/logout', logoutUser);
-router.post('/login', logUser);
-router.post('/register', registerUser);
+router.post('/login', isGuest, logUser);
+router.post('/register', isGuest, registerUser);
 
 module.exports = router;
