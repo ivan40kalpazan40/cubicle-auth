@@ -9,10 +9,10 @@ const cubeDetails = async (req, res) => {
   try {
     const cube = await cubeService.getOne(cubeId);
     const accessories = await cubeService.accForCube(cube._id);
-    res.render('details', { ...cube, accessories });
+    res.render('details', { ...cube, accessories, auth: req.user });
   } catch (err) {
     console.log(err);
-    res.render('404', { error: err.name, msg: err.message });
+    res.render('404', { error: err.name, msg: err.message, auth: req.user });
   }
 };
 
@@ -21,7 +21,7 @@ const getCreateCube = async (req, res) => {
   //console.log(cubes);
 
   //});
-  res.render('create');
+  res.render('create', { auth: req.user });
 };
 const createCube = (req, res) => {
   const { name, description, imageUrl, difficulty } = req.body;
@@ -35,6 +35,7 @@ const createCube = (req, res) => {
       res.render('404', {
         error: 'Cube was not created!',
         msg: 'Please make sure you provided correct data in the form!',
+        auth: req.user,
       });
     });
 };
@@ -44,6 +45,7 @@ const renderEdit = async (req, res) => {
   res.render('editCubePage', {
     cube,
     difficulty: difficulty[cube.difficulty],
+    auth: req.user,
   });
 };
 
@@ -53,6 +55,7 @@ const renderDelete = async (req, res) => {
   res.render('deleteCubePage', {
     cube,
     difficulty: difficulty[cube.difficulty],
+    auth: req.user
   });
 };
 

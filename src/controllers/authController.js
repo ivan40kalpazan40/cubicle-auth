@@ -5,11 +5,11 @@ const { TOKEN_COOKIE_NAME } = require('../constants');
 const router = express.Router();
 
 const renderLogin = (req, res) => {
-  res.render('auth/login');
+  res.render('auth/login', { auth: req.user });
 };
 
 const renderRegister = (req, res) => {
-  res.render('auth/register');
+  res.render('auth/register', { auth: req.user });
 };
 
 const logUser = async (req, res) => {
@@ -22,7 +22,7 @@ const logUser = async (req, res) => {
   } catch (error) {
     console.log(`_>` + error.message);
     return res.redirect('/auth/login');
-  } 
+  }
 };
 const registerUser = async (req, res) => {
   const { username, password, repeatPassword } = req.body;

@@ -1,9 +1,10 @@
 const express = require('express');
 const cubeService = require('../services/cubeService');
+const { isAuth } = require('../middleware/authMiddleware');
 const router = express.Router();
 
 const createAccessoryPage = (req, res) => {
-  res.render('createAccessory');
+  res.render('createAccessory', { auth: req.user });
 };
 
 const createAccessory = (req, res) => {
@@ -15,7 +16,7 @@ const createAccessory = (req, res) => {
     })
     .catch((err) => {
       console.error(err);
-      res.render('404', { error: err.name, msg: err._message });
+      res.render('404', { error: err.name, msg: err._message, auth: req.user });
     });
 };
 
@@ -27,7 +28,7 @@ const renderAttach = (req, res) => {
       cubeService
         .availableForCube(cube._id)
         .then((accessories) => {
-          res.render('attachAccessory', { cube, accessories });
+          res.render('attachAccessory', { cube, accessories, auth: req.user });
         })
         .catch((err) => console.log(err));
     })
@@ -43,7 +44,7 @@ const attachAccessory = async (req, res) => {
   });
   res.redirect('/');
 };
-
+router.use(isAuth);
 router.get('/create', createAccessoryPage);
 router.get('/attach/:id', renderAttach);
 router.post('/create', createAccessory);
