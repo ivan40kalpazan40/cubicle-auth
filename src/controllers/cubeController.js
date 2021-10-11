@@ -39,8 +39,12 @@ const createCube = (req, res) => {
     });
 };
 
-const renderEdit = (req, res) => {
-  res.render('editCubePage');
+const renderEdit = async (req, res) => {
+  const cube = await cubeService.getOne(req.params.cubeId);
+  res.render('editCubePage', {
+    cube,
+    difficulty: difficulty[cube.difficulty],
+  });
 };
 
 const renderDelete = async (req, res) => {
@@ -62,11 +66,16 @@ const deleteCubePage = async (req, res) => {
   }
 };
 
+const editCubePage = async (req, res) => {
+  console.log('edit cube');
+};
+
 router.get('/create', isAuth, getCreateCube);
 router.post('/create', createCube);
 router.get('/:cubeId', cubeDetails);
 router.get('/:cubeId/edit', isAuth, renderEdit);
 router.get('/:cubeId/delete', isAuth, renderDelete);
 router.post('/:cubeId/delete', isAuth, deleteCubePage);
+router.post('/:cubeId/edit', isAuth, editCubePage);
 
 module.exports = router;
