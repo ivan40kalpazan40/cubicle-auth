@@ -67,7 +67,20 @@ const deleteCubePage = async (req, res) => {
 };
 
 const editCubePage = async (req, res) => {
-  console.log('edit cube');
+  const cubeId = req.params.cubeId;
+  const { name, description, imageUrl, difficulty } = req.body;
+  try {
+    const cube = await cubeService.editCube(
+      cubeId,
+      name,
+      description,
+      imageUrl,
+      difficulty
+    );
+    res.redirect(`/cube/${cubeId}`);
+  } catch (error) {
+    res.redirect('/404');
+  }
 };
 
 router.get('/create', isAuth, getCreateCube);

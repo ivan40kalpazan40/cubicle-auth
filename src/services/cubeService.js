@@ -45,6 +45,21 @@ const updateCube = async (id, update) => {
   const cube = await Cube.findOneAndUpdate({ _id: id }, update);
   return cube;
 };
+
+const editCube = async (id, name, description, imageUrl, difficulty) => {
+  const cube = await Cube.findByIdAndUpdate(
+    id,
+    {
+      name,
+      description,
+      imageUrl,
+      difficulty,
+    },
+    { runValidators: true }
+  );
+  return cube;
+};
+
 const cubeService = {
   create,
   deleteCube,
@@ -56,5 +71,6 @@ const cubeService = {
   accForCube,
   availableForCube,
   updateCube,
+  editCube,
 };
 module.exports = cubeService;
